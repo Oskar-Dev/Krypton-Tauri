@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 1px;
+  height: auto;
+  outline: 1px solid var(--color-primary-400);
+  z-index: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  width: calc(100% - 1px);
+  background-color: var(--color-primary-600-translucent);
+}
+
+.box {
+  box-shadow: 1px 0px 0px 0px var(--color-primary-400);
+  height: auto;
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.focus ~ .box {
+  box-shadow: 1px 0px 0px 0px var(--color-accent);
+  background-color: var(--color-accent-translucent);
+}
+
+/* --- BUTTONS ---  */
+/* style to all buttons */
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+/* delete button */
+.delete-button {
+  color: var(--color-primary-400);
+  height: 36px;
+  width: 36px;
+}
+
+.delete-button:hover {
+  color: var(--color-accent);
+}
+
+/* settings button */
+.settings-button {
+  color: var(--color-text);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+
+.settings-button:hover {
+  transform: scale(1.15);
+  transition: 0.2s;
+}
+
+.icon-fill {
+  position: absolute;
+  z-index: -1;
+}
+
+/* --- INPUT ---  */
+.input-container.focus {
+  outline-color: var(--color-accent);
+}
+
+.input-container:focus-within {
+  z-index: 1;
+}
+
+.math-field-wrapper {
+  min-width: calc(100% - 50px - 36px - 1px);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.math-field {
+  color: var(--color-text);
+  border-color: var(--color-text);
+  height: auto;
+  padding: 15px 0px 15px 10px;
+  /* align-self: center; */
+  /* min-width: calc(25vw - 50px - 36px - 1px); */
+  width: inherit;
+  min-width: inherit;
+  font-size: 1.375rem;
+}
+
+.mq-editable-field .mq-cursor {
+  border-color: var(--color-text);
+}
+
+.mq-editable-field.mq-focused,
+.mq-math-mode .mq-editable-field.mq-focused,
+.mq-editable-field,
+.mq-math-mode .mq-editable-field {
+  border: none;
+  box-shadow: none;
+}
+
+.mq-root-block .mq-empty {
+  background-color: var(--color-text-translucent);
+}

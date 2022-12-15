@@ -1,0 +1,8 @@
+.side-bar-container {
+  width: 25vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--color-primary-600);
+  box-shadow: -1px 0 0 0 var(--color-primary-400) inset;
+}
