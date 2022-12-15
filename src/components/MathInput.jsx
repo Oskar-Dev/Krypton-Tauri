@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-// import 'katex/dist/katex.min.css'; // uninstall later ig
 import { BsGearFill, BsGear } from 'react-icons/bs';
 import { MdClear } from 'react-icons/md';
+import { parseLatex } from '../utils/parseLatex';
 
 import '../jquery/jquery.min.js';
 import '../mathquill-0.10.1/mathquill.min.js';
 
 import '../mathquill-0.10.1/mathquill.css';
 import '../styles/MathInput.css';
+import { invoke } from '@tauri-apps/api';
 
 const MathInput = ({ id }) => {
   const [focus, setFocus] = useState(false);
@@ -24,6 +25,9 @@ const MathInput = ({ id }) => {
       handlers: {
         edit: () => {
           var latex = mathField.latex();
+          var parsed_latex = parseLatex(latex);
+
+          invoke('handle_input_change', { id: id, latex: parsed_latex });
         },
       },
     });

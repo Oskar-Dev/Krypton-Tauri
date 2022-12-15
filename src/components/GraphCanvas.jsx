@@ -40,13 +40,19 @@ const GraphCanvas = () => {
 
     // for (var expr of exprs) {
     // var points = evalutePoints(expr, from, to, delta);
-    invoke('evaluate_points', { from: from, to: to, delta: delta }).then((points) => {
-      var center = { x: baseCenter.x + dragOffset.current.x, y: baseCenter.y + dragOffset.current.y };
-      renderGraph(points, ctx, scale, center);
-      console.log(points.length);
+    invoke('get_expressions_num').then((n) => {
+      for (var i = 0; i < n; i++) {
+        invoke('evaluate_points', { from: from, to: to, delta: delta, id: i })
+          .then((points) => {
+            var center = { x: baseCenter.x + dragOffset.current.x, y: baseCenter.y + dragOffset.current.y };
+            renderGraph(points, ctx, scale, center);
+            console.log(points.length);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
     });
-
-    // }
   };
 
   const setCanvas = () => {
