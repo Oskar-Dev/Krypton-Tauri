@@ -10,7 +10,7 @@ import '../mathquill-0.10.1/mathquill.css';
 import '../styles/MathInput.css';
 import { invoke } from '@tauri-apps/api';
 
-const MathInput = ({ id }) => {
+const MathInput = ({ id, latex, deleteCallback }) => {
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
@@ -33,10 +33,19 @@ const MathInput = ({ id }) => {
     });
   }, []);
 
+  useEffect(() => {
+    var MQ = MathQuill.getInterface(2);
+    var mathFieldSpan = document.getElementById(id);
+    var mathField = MQ.MathField(mathFieldSpan);
+
+    if (latex === undefined) mathField.latex('\\vphantom');
+    else mathField.latex(latex);
+  }, [latex]);
+
   return (
     <div className={`input-container ${focus ? 'focus' : ''}`} id={`input-container-${id}`}>
       <div className='delete-button button-wrapper'>
-        <MdClear className='icon' size={36} />
+        <MdClear className='icon' size={36} onClick={() => deleteCallback(id)} />
       </div>
 
       <div className={`math-field-wrapper ${focus ? 'focus' : ''}`}>
