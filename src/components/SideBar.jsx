@@ -40,9 +40,9 @@ const SideBar = () => {
   return (
     <div className='side-bar-container'>
       {expressions.map((expr) => {
-        const { id, latex } = expr;
+        const { id, latex, color } = expr;
 
-        return <MathInput key={id} id={id} latex={latex} deleteCallback={deleteCallback} />;
+        return <MathInput key={id} id={id} latex={latex} deleteCallback={deleteCallback} color={color} />;
       })}
 
       <div className='add-button'>

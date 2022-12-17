@@ -10,7 +10,7 @@ import '../mathquill-0.10.1/mathquill.css';
 import '../styles/MathInput.css';
 import { invoke } from '@tauri-apps/api';
 
-const MathInput = ({ id, latex, deleteCallback }) => {
+const MathInput = ({ id, latex, deleteCallback, color }) => {
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
@@ -64,13 +64,13 @@ const MathInput = ({ id, latex, deleteCallback }) => {
         <div className='settings-button'>
           <BsGear
             className='icon'
-            color={/*settings.color*/ '#b4202a'}
+            color={color}
             size={24}
             onClick={() => {
               toggleSettings();
             }}
           />
-          <BsGearFill className='icon-fill' color={/*settings.color*/ '#b4202a' + '3C'} size={24} />
+          <BsGearFill className='icon-fill' color={color + '3C'} size={24} />
         </div>
       </div>
     </div>
