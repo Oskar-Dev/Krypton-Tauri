@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 import React, { useState, useEffect } from 'react';
 import MathInput from './MathInput';
 import { MdAdd } from 'react-icons/md';
+import GraphColors from '../utils/graphColors';
 
 import '../styles/SideBar.css';
 
@@ -10,7 +11,8 @@ const SideBar = () => {
   const [nextId, setNextId] = useState(0);
 
   const createNewMathInput = () => {
-    invoke('create_new_expression', { id: nextId });
+    var color = GraphColors[nextId % (GraphColors.length - 1)];
+    invoke('create_new_expression', { id: nextId, color: color });
     setNextId((currentId) => currentId + 1);
 
     invoke('get_expressions').then((exprs) => {
