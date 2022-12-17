@@ -43,10 +43,12 @@ const GraphCanvas = () => {
     invoke('get_expressions_ids').then((ids) => {
       for (var id of ids) {
         invoke('evaluate_points', { from: from, to: to, delta: delta, id: id })
-          .then((points) => {
+          .then((data) => {
+            var points = data[0];
+            var { color, width } = data[1];
             var center = { x: baseCenter.x + dragOffset.current.x, y: baseCenter.y + dragOffset.current.y };
-            renderGraph(points, ctx, scale, center);
-            console.log(points.length);
+
+            renderGraph(points, ctx, scale, center, color, width);
           })
           .catch((e) => {
             console.log(e);
