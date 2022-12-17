@@ -25,9 +25,9 @@ const MathInput = ({ id, latex, deleteCallback }) => {
       handlers: {
         edit: () => {
           var latex = mathField.latex();
-          var parsed_latex = parseLatex(latex);
+          var parsedLatex = parseLatex(latex);
 
-          invoke('handle_input_change', { id: id, latex: parsed_latex });
+          invoke('handle_input_change', { id: id, newParsedInput: parsedLatex });
         },
       },
     });
