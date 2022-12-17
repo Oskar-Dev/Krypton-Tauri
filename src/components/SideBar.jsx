@@ -6,7 +6,7 @@ import GraphColors from '../utils/graphColors';
 
 import '../styles/SideBar.css';
 
-const SideBar = () => {
+const SideBar = ({ setForceRerender }) => {
   const [expressions, setExpressions] = useState([]);
   const [nextId, setNextId] = useState(0);
 
@@ -42,7 +42,16 @@ const SideBar = () => {
       {expressions.map((expr) => {
         const { id, latex, color } = expr;
 
-        return <MathInput key={id} id={id} latex={latex} deleteCallback={deleteCallback} color={color} />;
+        return (
+          <MathInput
+            key={id}
+            id={id}
+            latex={latex}
+            deleteCallback={deleteCallback}
+            color={color}
+            setForceRerender={setForceRerender}
+          />
+        );
       })}
 
       <div className='add-button'>

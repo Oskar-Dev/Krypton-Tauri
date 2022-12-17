@@ -10,7 +10,7 @@ import '../mathquill-0.10.1/mathquill.css';
 import '../styles/MathInput.css';
 import { invoke } from '@tauri-apps/api';
 
-const MathInput = ({ id, latex, deleteCallback, color }) => {
+const MathInput = ({ id, latex, deleteCallback, color, setForceRerender }) => {
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
@@ -27,7 +27,9 @@ const MathInput = ({ id, latex, deleteCallback, color }) => {
           var latex = mathField.latex();
           var parsedLatex = parseLatex(latex);
 
-          invoke('handle_input_change', { id: id, newParsedInput: parsedLatex });
+          invoke('handle_input_change', { id: id, newParsedInput: parsedLatex }).then(() => {
+            setForceRerender((v) => !v);
+          });
         },
       },
     });

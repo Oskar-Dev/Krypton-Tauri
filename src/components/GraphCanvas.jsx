@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/tauri';
 import React, { useEffect, useRef } from 'react';
 import { renderGraph } from '../graph-functions/renderGraph';
 
-const GraphCanvas = () => {
+const GraphCanvas = ({ forceRerender }) => {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
   const dragOffset = useRef({ x: 0, y: 0 });
@@ -109,6 +109,10 @@ const GraphCanvas = () => {
     canvas.addEventListener('mousemove', (e) => handleDrag(e));
     canvas.addEventListener('mouseup', handleDragEnd);
   }, []);
+
+  useEffect(() => {
+    render();
+  }, [forceRerender]);
 
   return <canvas ref={canvasRef} />;
 };
