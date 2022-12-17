@@ -1,4 +1,6 @@
-export const renderGraph = (points, ctx, scale, center) => {
+export const renderGraph = (points, ctx, scale, center, color, width) => {
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
   ctx.beginPath();
 
   for (var i = 0, n = points.length; i < n; i++) {
