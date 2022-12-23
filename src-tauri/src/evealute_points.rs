@@ -1,6 +1,6 @@
 use meval::Expr;
 use tauri::State;
-use crate::{ExpressionsList, handle_math_input::Expression};
+use crate::{ExpressionsList, expression::Expression};
 
 #[tauri::command]
 pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list: State<ExpressionsList>) -> Result<(Vec<[f64; 2]>, Expression), String> {

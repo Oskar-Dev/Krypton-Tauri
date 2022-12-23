@@ -4,7 +4,7 @@
 )]
 
 use evealute_points::evaluate_points;
-use handle_math_input::{
+use expression::{
     handle_input_change, 
     get_expressions_ids, 
     create_new_expression, 
@@ -15,7 +15,7 @@ use handle_math_input::{
 };
 
 mod evealute_points;
-mod handle_math_input;
+mod expression;
 
 fn main() {
     tauri::Builder::default()
