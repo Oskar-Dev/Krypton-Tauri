@@ -18,9 +18,6 @@ const GraphCanvas = ({ forceRerender }) => {
 
   var dragging = false;
 
-  // const exprs = ['x', '3x', '2x', '1', '3'];
-  // const expr = 'sin(x)/x*5';
-
   const rerenderGraph = (x, y) => {
     ctxRef.current.globalCompositeOperation = 'copy';
     ctxRef.current.drawImage(ctxRef.current.canvas, x, y);
@@ -38,8 +35,6 @@ const GraphCanvas = ({ forceRerender }) => {
     var from = c - w;
     var to = c;
 
-    // for (var expr of exprs) {
-    // var points = evalutePoints(expr, from, to, delta);
     invoke('get_expressions_ids').then((ids) => {
       for (var id of ids) {
         invoke('evaluate_points', { from: from, to: to, delta: delta, id: id })
