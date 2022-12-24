@@ -1,5 +1,6 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import React, { useEffect, useRef } from 'react';
+import drawCoordinatePlane from '../graph-functions/drawCoordinatePlane';
 import { renderGraph } from '../graph-functions/renderGraph';
 
 const GraphCanvas = ({ forceRerender }) => {
@@ -35,13 +36,16 @@ const GraphCanvas = ({ forceRerender }) => {
     var from = c - w;
     var to = c;
 
+    var center = { x: baseCenter.x + dragOffset.current.x, y: baseCenter.y + dragOffset.current.y };
+
+    drawCoordinatePlane(canvas.width, canvas.height, dragOffset.current, ctx);
+
     invoke('get_expressions_ids').then((ids) => {
       for (var id of ids) {
         invoke('evaluate_points', { from: from, to: to, delta: delta, id: id })
           .then((data) => {
             var points = data[0];
             var { color, width } = data[1];
-            var center = { x: baseCenter.x + dragOffset.current.x, y: baseCenter.y + dragOffset.current.y };
 
             renderGraph(points, ctx, scale, center, color, width);
           })
@@ -85,8 +89,6 @@ const GraphCanvas = ({ forceRerender }) => {
 
     lastDrag.x = x;
     lastDrag.y = y;
-
-    // render();
   };
 
   const handleDragEnd = () => {
