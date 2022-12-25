@@ -7,6 +7,8 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
 
   let gridColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-400');
 
+  let arrowSize = 8;
+
   /// MAIN GRID
   ctx.beginPath();
   ctx.lineWidth = 2;
@@ -53,9 +55,19 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   ctx.moveTo(0, height / 2 + dragOffset.y);
   ctx.lineTo(width, height / 2 + dragOffset.y);
 
+  // X AXIS arrow
+  ctx.lineTo(width - arrowSize, height / 2 + dragOffset.y - arrowSize);
+  ctx.moveTo(width, height / 2 + dragOffset.y);
+  ctx.lineTo(width - arrowSize, height / 2 + dragOffset.y + arrowSize);
+
   /// Y AXIS
+  ctx.moveTo(width / 2 + dragOffset.x, height);
+  ctx.lineTo(width / 2 + dragOffset.x, 0);
+
+  /// Y AXIS arrow
+  ctx.lineTo(width / 2 + dragOffset.x + arrowSize, arrowSize);
   ctx.moveTo(width / 2 + dragOffset.x, 0);
-  ctx.lineTo(width / 2 + dragOffset.x, height);
+  ctx.lineTo(width / 2 + dragOffset.x - arrowSize, arrowSize);
 
   ctx.stroke();
 };
