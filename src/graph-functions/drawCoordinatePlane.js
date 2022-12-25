@@ -12,6 +12,9 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   let textPaddingY = 20;
   let textPaddingX = 8;
 
+  let xAxisLabel = 'x';
+  let yAxisLabel = 'y';
+
   /// MAIN GRID
   ctx.beginPath();
   ctx.lineWidth = 2;
@@ -104,6 +107,12 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
 
     ctx.fillText(value, xPos, height / 2 + dragOffset.y + textPaddingY);
   }
+
+  // AXIS LABELS
+  ctx.fillText(xAxisLabel, width - 12, height / 2 + dragOffset.y + 16);
+
+  ctx.textAlign = 'left';
+  ctx.fillText(yAxisLabel, width / 2 + dragOffset.x + 8, 24);
 };
 
 export default drawCoordinatePlane;
