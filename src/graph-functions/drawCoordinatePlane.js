@@ -82,6 +82,17 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   ctx.font = '1rem PoppinsRegular';
   ctx.textAlign = 'center';
 
+  // X AXIS NUMBERS
+  let xAxisNumbers = Math.ceil(width / gridWidth);
+
+  for (let i = 0; i < xAxisNumbers; i++) {
+    let xPos = i * gridWidth + (dragOffset.x % gridWidth) + 20;
+    let value = -((width / 2 + dragOffset.x - xPos) / gridWidth);
+    if (value === 0) continue;
+
+    ctx.fillText(value, xPos, height / 2 + dragOffset.y + textPaddingY);
+  }
+
   // 0
   ctx.textAlign = 'right';
   ctx.fillText(0, width / 2 + dragOffset.x - textPaddingX, height / 2 + dragOffset.y + textPaddingY);
@@ -95,17 +106,6 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
     if (value === 0) continue;
 
     ctx.fillText(value, width / 2 + dragOffset.x - textPaddingX, yPos);
-  }
-
-  // X AXIS NUMBERS
-  let xAxisNumbers = Math.ceil(width / gridWidth);
-
-  for (let i = 0; i < xAxisNumbers; i++) {
-    let xPos = i * gridWidth + (dragOffset.x % gridWidth) + 20;
-    let value = -((width / 2 + dragOffset.x - xPos) / gridWidth);
-    if (value === 0) continue;
-
-    ctx.fillText(value, xPos, height / 2 + dragOffset.y + textPaddingY);
   }
 
   // AXIS LABELS
