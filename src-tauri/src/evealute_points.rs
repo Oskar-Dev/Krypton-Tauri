@@ -1,10 +1,13 @@
-use meval::Expr;
+use meval::{Expr, Context};
 use tauri::State;
 use crate::{ExpressionsList, expression::Expression};
 
 #[tauri::command]
 pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list: State<ExpressionsList>) -> Result<(Vec<[f64; 2]>, Expression), String> {
     let expr_list = expressions_list.0.lock().unwrap();
+
+    let mut ctx = Context::new();
+    ctx.func("cot", |x| 1.0 / x.tan());
 
     match expr_list.get(&id) {
         Some(expr_struct) => {
@@ -13,7 +16,7 @@ pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list
                 None => return Err(format!("No expression found, id: {}", id)),
             };
 
-            let func = match expr.bind("x") {
+            let func = match expr.bind_with_context(ctx, "x") {
                 Ok(v) => v,
                 Err(_) => return Err(format!("Couldn't bind the expression, id: {}", id)),
             };
