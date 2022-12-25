@@ -6,8 +6,11 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   let top = (dragOffset.y % gridHeight) + height / 2 - Math.floor(height / 2 / gridHeight) * gridHeight - buffer;
 
   let gridColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary-400');
+  let textColor = getComputedStyle(document.documentElement).getPropertyValue('--color-text');
 
   let arrowSize = 8;
+  let textPaddingY = 20;
+  let textPaddingX = 8;
 
   /// MAIN GRID
   ctx.beginPath();
@@ -49,7 +52,7 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
 
   // AXIS
   ctx.beginPath();
-  ctx.strokeStyle = '#fff';
+  ctx.strokeStyle = textColor;
 
   /// X AXIS
   ctx.moveTo(0, height / 2 + dragOffset.y);
@@ -70,6 +73,37 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   ctx.lineTo(width / 2 + dragOffset.x - arrowSize, arrowSize);
 
   ctx.stroke();
+
+  // AXIS NUMBERS
+  ctx.fillStyle = textColor;
+  ctx.font = '1rem PoppinsRegular';
+  ctx.textAlign = 'center';
+
+  // 0
+  ctx.textAlign = 'right';
+  ctx.fillText(0, width / 2 + dragOffset.x - textPaddingX, height / 2 + dragOffset.y + textPaddingY);
+
+  // Y AXIS NUMBERS
+  let yAxisNumbers = Math.ceil(height / gridHeight);
+
+  for (let i = 0; i < yAxisNumbers; i++) {
+    let yPos = i * gridHeight + (dragOffset.y % gridHeight) + 10;
+    let value = -Math.round((height / 2 + dragOffset.y - yPos) / gridHeight);
+    if (value === 0) continue;
+
+    ctx.fillText(value, width / 2 + dragOffset.x - textPaddingX, yPos);
+  }
+
+  // X AXIS NUMBERS
+  let xAxisNumbers = Math.ceil(width / gridWidth);
+
+  for (let i = 0; i < xAxisNumbers; i++) {
+    let xPos = i * gridWidth + (dragOffset.x % gridWidth) + 20;
+    let value = -((width / 2 + dragOffset.x - xPos) / gridWidth);
+    if (value === 0) continue;
+
+    ctx.fillText(value, xPos, height / 2 + dragOffset.y + textPaddingY);
+  }
 };
 
 export default drawCoordinatePlane;
