@@ -30,6 +30,8 @@ const SideBar = ({ setForceRerender }) => {
 
       if (exprs.length === 0) createNewMathInput();
     });
+
+    setForceRerender((v) => !v);
   };
 
   useEffect(() => {
