@@ -86,8 +86,8 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   let xAxisNumbers = Math.ceil(width / gridWidth);
 
   for (let i = 0; i < xAxisNumbers; i++) {
-    let xPos = i * gridWidth + (dragOffset.x % gridWidth) + 20;
-    let value = -((width / 2 + dragOffset.x - xPos) / gridWidth);
+    let xPos = i * gridWidth + (dragOffset.x % gridWidth) + width / 2 - Math.floor(width / 2 / gridWidth) * gridWidth;
+    let value = -Math.round((width / 2 + dragOffset.x - xPos) / gridWidth);
     if (value === 0) continue;
 
     ctx.fillText(value, xPos, height / 2 + dragOffset.y + textPaddingY);
@@ -101,7 +101,8 @@ const drawCoordinatePlane = (width, height, dragOffset, ctx) => {
   let yAxisNumbers = Math.ceil(height / gridHeight);
 
   for (let i = 0; i < yAxisNumbers; i++) {
-    let yPos = i * gridHeight + (dragOffset.y % gridHeight) + 10;
+    let yPos =
+      i * gridHeight + (dragOffset.y % gridHeight) + height / 2 - Math.floor(height / 2 / gridHeight) * gridHeight + 5;
     let value = -Math.round((height / 2 + dragOffset.y - yPos) / gridHeight);
     if (value === 0) continue;
 
