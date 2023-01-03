@@ -1,9 +1,30 @@
 use meval::{Expr, Context};
 use tauri::State;
+use time::Instant;
+use serde::Serialize;
 use crate::{ExpressionsList, expression::Expression};
+use crate::math;
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Point {
+    pub x: f64,
+    pub y: f64
+}
+
+impl Point {
+    fn new(x: f64, y: f64) -> Self {
+        Self {
+            x,
+            y
+        }
+    }
+}
 
 #[tauri::command]
-pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list: State<ExpressionsList>) -> Result<(Vec<[f64; 2]>, Expression), String> {
+pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list: State<ExpressionsList>) -> Result<(Vec<Point>, Expression), String> {
+    let start = Instant::now();
+    
     let expr_list = expressions_list.0.lock().unwrap();
 
     let mut ctx = Context::new();
@@ -21,14 +42,21 @@ pub fn evaluate_points(from: i32, to: i32, delta: f64, id: u32, expressions_list
                 Err(_) => return Err(format!("Couldn't bind the expression, id: {}", id)),
             };
         
-            let mut points: Vec<[f64; 2]> = Vec::new();
+            let mut points: Vec<Point> = Vec::new();
         
             for i in from..to {
                 let x: f64 = i as f64 * delta;
                 let y: f64 = func(x);
-        
-                points.push([x, y]);
+
+                if y.is_infinite() || y.is_nan() {
+                    continue;
+                }
+         
+                points.push(Point::new(x, y));
             }
+
+            let elapsed = start.elapsed();
+            println!("Elapsed time: {:?}", elapsed);
         
             return Ok((points, expr_struct.clone()));
         },
