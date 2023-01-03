@@ -5,9 +5,7 @@ export const renderGraph = (points, ctx, scale, center, color, width) => {
 
   for (var i = 0, n = points.length; i < n; i++) {
     var point = points[i];
-    // var { x, y } = point;
-    var x = point[0];
-    var y = point[1];
+    var { x, y } = point;
 
     ctx.lineTo(center.x + x * scale, center.y - y * scale);
   }
