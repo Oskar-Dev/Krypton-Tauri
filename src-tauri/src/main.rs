@@ -16,6 +16,7 @@ use expression::{
 
 mod evealute_points;
 mod expression;
+mod math;
 
 fn main() {
     tauri::Builder::default()
